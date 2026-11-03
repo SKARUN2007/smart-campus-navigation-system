@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: smart_campus_app
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=postgresql://campus_admin:campus_secure_password@db:5432/smart_campus?schema=public
+      - JWT_SECRET=campus_prod_secret_key_change_in_production
+      - NEXTAUTH_URL=http://localhost:3000
+      - NODE_ENV=production
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres:16-alpine
+    container_name: smart_campus_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: campus_admin
+      POSTGRES_PASSWORD: campus_secure_password
+      POSTGRES_DB: smart_campus
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U campus_admin -d smart_campus"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
