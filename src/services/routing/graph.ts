@@ -151,3 +151,4 @@ export class CampusGraph {
 
 // Global default singleton instance
 export const defaultCampusGraph = new CampusGraph();
+

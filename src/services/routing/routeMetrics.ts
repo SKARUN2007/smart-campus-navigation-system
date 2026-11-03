@@ -34,3 +34,4 @@ export function estimateCaloriesBurned(distanceMeters: number): number {
   // Approximate standard 0.05 kcal burned per meter of moderate walking
   return Math.round(distanceMeters * 0.048);
 }
+

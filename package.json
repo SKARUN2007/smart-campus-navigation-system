@@ -10,7 +10,8 @@
     "db:push": "prisma db push",
     "db:seed": "node prisma/seed.js",
     "db:studio": "prisma studio",
-    "test:routing": "npx tsx scripts/test-routing.ts"
+    "test:routing": "npx tsx scripts/test-routing.ts",
+    "test:api": "npx tsx scripts/test-api.ts"
   },
   "dependencies": {
     "@prisma/client": "^6.4.0",

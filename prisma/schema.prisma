@@ -10,6 +10,7 @@ generator client {
 enum Role {
   ADMIN
   STAFF
+  FACULTY
   STUDENT
   VISITOR
 }
@@ -23,6 +24,7 @@ model User {
   department        String?
   studentId         String?
   avatar            String?
+  isActive          Boolean             @default(true)
   favourites        Favourite[]
   navigationHistory NavigationHistory[]
   createdAt         DateTime            @default(now())
@@ -36,6 +38,7 @@ model Category {
   description String?
   icon        String?
   color       String?
+  buildings   Building[]
   locations   Location[]
   facilities  Facility[]
   createdAt   DateTime   @default(now())
@@ -46,18 +49,21 @@ model Building {
   id                   String           @id @default(cuid())
   code                 String           @unique
   name                 String
+  buildingCode         String?
   description          String?
   floors               Int              @default(1)
-  svgX                 Float
-  svgY                 Float
-  svgWidth             Float
-  svgHeight            Float
+  svgX                 Float            @default(0)
+  svgY                 Float            @default(0)
+  svgWidth             Float            @default(100)
+  svgHeight            Float            @default(80)
   latitude             Float?
   longitude            Float?
   openingHours         String?
   contactPhone         String?
   contactEmail         String?
   wheelchairAccessible Boolean          @default(true)
+  categoryId           String?
+  category             Category?        @relation(fields: [categoryId], references: [id], onDelete: SetNull)
   locations            Location[]
   facilities           Facility[]
   navigationNodes      NavigationNode[]
@@ -70,6 +76,11 @@ model Location {
   code                String?             @unique
   name                String
   description         String?
+  locationType        String?             @default("Department")
+  mapX                Float?
+  mapY                Float?
+  openingHours        String?
+  accessibility       Boolean             @default(true)
   floorNumber         Int                 @default(0)
   roomNumber          String?
   categoryId          String
@@ -125,6 +136,7 @@ model NavigationNode {
   isOutdoor     Boolean          @default(true)
   buildingId    String?
   building      Building?        @relation(fields: [buildingId], references: [id])
+  locationId    String?
   locations     Location[]
   facilities    Facility[]
   outgoingEdges NavigationEdge[] @relation("NodeOutgoing")
@@ -143,6 +155,9 @@ model NavigationEdge {
   toNode          NavigationNode @relation("NodeIncoming", fields: [toNodeId], references: [id], onDelete: Cascade)
   distance        Float
   walkingTime     Int
+  accessible      Boolean        @default(true)
+  available       Boolean        @default(true)
+  pathType        String         @default("WALKWAY")
   isAccessible    Boolean        @default(true)
   isCovered       Boolean        @default(false)
   isPathAvailable Boolean        @default(true)
@@ -177,6 +192,8 @@ model NavigationHistory {
   destinationLocation   Location? @relation("HistoryDestination", fields: [destinationLocationId], references: [id], onDelete: SetNull)
   distanceMeters        Float
   durationSeconds       Int
+  totalDistance         Float?
+  estimatedTime         Int?
   routeNodes            String
   createdAt             DateTime  @default(now())
 
