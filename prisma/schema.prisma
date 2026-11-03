@@ -1,0 +1,184 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Role {
+  ADMIN
+  STAFF
+  STUDENT
+  VISITOR
+}
+
+model User {
+  id                String              @id @default(cuid())
+  email             String              @unique
+  name              String
+  passwordHash      String
+  role              Role                @default(STUDENT)
+  department        String?
+  studentId         String?
+  avatar            String?
+  favourites        Favourite[]
+  navigationHistory NavigationHistory[]
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+}
+
+model Category {
+  id          String     @id @default(cuid())
+  name        String     @unique
+  slug        String     @unique
+  description String?
+  icon        String?
+  color       String?
+  locations   Location[]
+  facilities  Facility[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+model Building {
+  id                   String           @id @default(cuid())
+  code                 String           @unique
+  name                 String
+  description          String?
+  floors               Int              @default(1)
+  svgX                 Float
+  svgY                 Float
+  svgWidth             Float
+  svgHeight            Float
+  latitude             Float?
+  longitude            Float?
+  openingHours         String?
+  contactPhone         String?
+  contactEmail         String?
+  wheelchairAccessible Boolean          @default(true)
+  locations            Location[]
+  facilities           Facility[]
+  navigationNodes      NavigationNode[]
+  createdAt            DateTime         @default(now())
+  updatedAt            DateTime         @updatedAt
+}
+
+model Location {
+  id                  String              @id @default(cuid())
+  code                String?             @unique
+  name                String
+  description         String?
+  floorNumber         Int                 @default(0)
+  roomNumber          String?
+  categoryId          String
+  category            Category            @relation(fields: [categoryId], references: [id])
+  buildingId          String?
+  building            Building?           @relation(fields: [buildingId], references: [id], onDelete: Cascade)
+  navigationNodeId    String?
+  navigationNode      NavigationNode?     @relation(fields: [navigationNodeId], references: [id])
+  isPopular           Boolean             @default(false)
+  tags                String[]            @default([])
+  favourites          Favourite[]
+  historyStarts       NavigationHistory[] @relation("HistoryStart")
+  historyDestinations NavigationHistory[] @relation("HistoryDestination")
+  createdAt           DateTime            @default(now())
+  updatedAt           DateTime            @updatedAt
+
+  @@index([name])
+  @@index([categoryId])
+  @@index([navigationNodeId])
+}
+
+model Facility {
+  id                     String          @id @default(cuid())
+  name                   String
+  description            String?
+  buildingId             String?
+  building               Building?       @relation(fields: [buildingId], references: [id], onDelete: Cascade)
+  categoryId             String
+  category               Category        @relation(fields: [categoryId], references: [id])
+  floorNumber            Int             @default(0)
+  openingHours           String?
+  contactPhone           String?
+  contactEmail           String?
+  isWheelchairAccessible Boolean         @default(true)
+  navigationNodeId       String?
+  navigationNode         NavigationNode? @relation(fields: [navigationNodeId], references: [id])
+  createdAt              DateTime        @default(now())
+  updatedAt              DateTime        @updatedAt
+
+  @@index([categoryId])
+  @@index([navigationNodeId])
+}
+
+model NavigationNode {
+  id            String           @id @default(cuid())
+  label         String           @unique
+  name          String
+  x             Float
+  y             Float
+  latitude      Float?
+  longitude     Float?
+  floor         Int              @default(0)
+  isOutdoor     Boolean          @default(true)
+  buildingId    String?
+  building      Building?        @relation(fields: [buildingId], references: [id])
+  locations     Location[]
+  facilities    Facility[]
+  outgoingEdges NavigationEdge[] @relation("NodeOutgoing")
+  incomingEdges NavigationEdge[] @relation("NodeIncoming")
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+
+  @@index([label])
+}
+
+model NavigationEdge {
+  id              String         @id @default(cuid())
+  fromNodeId      String
+  fromNode        NavigationNode @relation("NodeOutgoing", fields: [fromNodeId], references: [id], onDelete: Cascade)
+  toNodeId        String
+  toNode          NavigationNode @relation("NodeIncoming", fields: [toNodeId], references: [id], onDelete: Cascade)
+  distance        Float
+  walkingTime     Int
+  isAccessible    Boolean        @default(true)
+  isCovered       Boolean        @default(false)
+  isPathAvailable Boolean        @default(true)
+  pathwayType     String         @default("WALKWAY")
+  instruction     String?
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  @@unique([fromNodeId, toNodeId])
+  @@index([fromNodeId])
+  @@index([toNodeId])
+}
+
+model Favourite {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  locationId String
+  location   Location @relation(fields: [locationId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
+
+  @@unique([userId, locationId])
+}
+
+model NavigationHistory {
+  id                    String    @id @default(cuid())
+  userId                String?
+  user                  User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  startLocationId       String?
+  startLocation         Location? @relation("HistoryStart", fields: [startLocationId], references: [id], onDelete: SetNull)
+  destinationLocationId String?
+  destinationLocation   Location? @relation("HistoryDestination", fields: [destinationLocationId], references: [id], onDelete: SetNull)
+  distanceMeters        Float
+  durationSeconds       Int
+  routeNodes            String
+  createdAt             DateTime  @default(now())
+
+  @@index([userId])
+}
