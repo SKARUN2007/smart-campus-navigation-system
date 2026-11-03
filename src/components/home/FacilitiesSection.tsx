@@ -103,7 +103,7 @@ export const FacilitiesSection: React.FC = () => {
                 {/* Card Action */}
                 <div className="mt-5 pt-3 border-t border-slate-100">
                   <Link
-                    href={`/map?destination=${encodeURIComponent(fac.name)}`}
+                    href={`/explore?destination=${encodeURIComponent(fac.name)}`}
                     className="w-full inline-flex items-center justify-center gap-1.5 py-2 rounded-xl text-xs font-semibold bg-slate-50 group-hover:bg-blue-600 text-slate-700 group-hover:text-white border border-slate-200 group-hover:border-blue-600 transition-all active:scale-[0.98]"
                   >
                     <Navigation className="w-3.5 h-3.5" />
@@ -118,3 +118,4 @@ export const FacilitiesSection: React.FC = () => {
     </section>
   );
 };
+

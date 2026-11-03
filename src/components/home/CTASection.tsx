@@ -30,7 +30,7 @@ export const CTASection: React.FC = () => {
 
             <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link
-                href="/map"
+                href="/explore"
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-2xl bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white font-bold text-base shadow-xl shadow-cyan-500/25 transition-all active:scale-[0.98] group"
               >
                 <Compass className="w-5 h-5 text-slate-950 stroke-[2.2] group-hover:rotate-45 transition-transform" />
@@ -69,3 +69,4 @@ export const CTASection: React.FC = () => {
     </section>
   );
 };
+

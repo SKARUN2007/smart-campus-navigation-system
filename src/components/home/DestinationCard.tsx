@@ -59,7 +59,7 @@ export const DestinationCard: React.FC<DestinationCardProps> = ({ category }) =>
       {/* Explore Button */}
       <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
         <Link
-          href={`/map?category=${category.slug}`}
+          href={`/explore?category=${category.slug}`}
           className="text-xs font-bold text-blue-600 hover:text-blue-700 flex items-center gap-1.5 group/link"
         >
           <span>Explore Category</span>
@@ -70,3 +70,4 @@ export const DestinationCard: React.FC<DestinationCardProps> = ({ category }) =>
     </div>
   );
 };
+

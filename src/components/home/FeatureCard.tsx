@@ -52,3 +52,4 @@ export const FeatureCard: React.FC<FeatureCardProps> = ({ feature }) => {
     </div>
   );
 };
+

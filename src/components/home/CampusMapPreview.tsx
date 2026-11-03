@@ -309,7 +309,7 @@ export const CampusMapPreview: React.FC = () => {
               </p>
 
               <Link
-                href="/map"
+                href="/explore"
                 className="w-full inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-semibold text-xs sm:text-sm shadow-md transition-all active:scale-[0.98]"
               >
                 <span>Explore Interactive Map</span>
@@ -322,3 +322,4 @@ export const CampusMapPreview: React.FC = () => {
     </section>
   );
 };
+

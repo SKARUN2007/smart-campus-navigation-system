@@ -45,7 +45,7 @@ export const HeroSection: React.FC = () => {
             {/* Quick Action Buttons */}
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 pt-1">
               <Link
-                href="/map"
+                href="/explore"
                 className="inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-2xl bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold text-base shadow-lg shadow-blue-600/25 hover:shadow-xl hover:shadow-blue-600/35 transition-all active:scale-[0.98] group"
               >
                 <Compass className="w-5 h-5 text-cyan-300 stroke-[2.2] group-hover:rotate-45 transition-transform" />
@@ -103,3 +103,4 @@ export const HeroSection: React.FC = () => {
     </section>
   );
 };
+

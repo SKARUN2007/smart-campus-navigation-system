@@ -241,7 +241,7 @@ export const CampusMapVectorHero: React.FC = () => {
             <span className="font-medium text-slate-700">Apex Main Campus (65 Acres)</span>
           </div>
           <Link
-            href="/map"
+            href="/explore"
             className="text-blue-600 hover:text-blue-700 font-semibold flex items-center gap-1 group"
           >
             <span>Open Interactive Map</span>
@@ -252,3 +252,4 @@ export const CampusMapVectorHero: React.FC = () => {
     </div>
   );
 };
+

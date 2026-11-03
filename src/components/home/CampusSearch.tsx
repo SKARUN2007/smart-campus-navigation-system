@@ -63,7 +63,7 @@ export const CampusSearch: React.FC<CampusSearchProps> = ({ className = '' }) =>
   const handleSelectLocation = (loc: SampleLocation) => {
     setQuery(loc.name);
     setIsOpen(false);
-    router.push(`/map?destination=${encodeURIComponent(loc.name)}&id=${loc.id}`);
+    router.push(`/explore?destination=${encodeURIComponent(loc.name)}&id=${loc.id}`);
   };
 
   const handleSearchSubmit = (e?: React.FormEvent) => {
@@ -75,7 +75,7 @@ export const CampusSearch: React.FC<CampusSearchProps> = ({ className = '' }) =>
     } else if (filteredLocations.length > 0) {
       handleSelectLocation(filteredLocations[0]);
     } else {
-      router.push(`/map?query=${encodeURIComponent(query.trim())}`);
+      router.push(`/explore?query=${encodeURIComponent(query.trim())}`);
     }
   };
 
@@ -214,7 +214,7 @@ export const CampusSearch: React.FC<CampusSearchProps> = ({ className = '' }) =>
           <div className="p-3 bg-slate-50 text-center">
             <button
               type="button"
-              onClick={() => router.push(`/map?query=${encodeURIComponent(query)}`)}
+              onClick={() => router.push(`/explore?query=${encodeURIComponent(query)}`)}
               className="text-xs font-semibold text-blue-600 hover:text-blue-700 inline-flex items-center gap-1"
             >
               <span>Explore all search results on Campus Map</span>
@@ -246,3 +246,4 @@ export const CampusSearch: React.FC<CampusSearchProps> = ({ className = '' }) =>
     </div>
   );
 };
+

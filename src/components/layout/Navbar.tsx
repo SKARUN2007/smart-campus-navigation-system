@@ -32,7 +32,7 @@ export const Navbar: React.FC = () => {
 
   const navLinks = [
     { name: 'Home', href: '/' },
-    { name: 'Explore Campus', href: '/map' },
+    { name: 'Explore Campus', href: '/explore' },
     { name: 'Facilities', href: '/facilities' },
     { name: 'About', href: '/#about' },
   ];
@@ -99,7 +99,7 @@ export const Navbar: React.FC = () => {
               Sign In
             </Link>
             <Link
-              href="/map"
+              href="/explore"
               className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white shadow-md shadow-blue-500/20 hover:shadow-lg hover:shadow-blue-500/30 transition-all active:scale-[0.98]"
             >
               <span>Get Started</span>
@@ -110,7 +110,7 @@ export const Navbar: React.FC = () => {
           {/* Mobile Menu Button */}
           <div className="flex md:hidden items-center gap-2">
             <Link
-              href="/map"
+              href="/explore"
               className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-blue-600 text-white shadow-sm"
             >
               Map
@@ -163,7 +163,7 @@ export const Navbar: React.FC = () => {
               Sign In
             </Link>
             <Link
-              href="/map"
+              href="/explore"
               onClick={() => setMobileMenuOpen(false)}
               className="w-full py-2.5 text-center text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-xl shadow-md shadow-blue-500/20 flex items-center justify-center gap-2"
             >
@@ -176,3 +176,4 @@ export const Navbar: React.FC = () => {
     </header>
   );
 };
+

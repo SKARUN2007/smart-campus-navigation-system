@@ -517,3 +517,4 @@ export const CAMPUS_FACILITIES_LIST: DetailedFacility[] = [
     highlight: '250+ spaces, 12 Level-2 EV charging points, CCTV',
   },
 ];
+
