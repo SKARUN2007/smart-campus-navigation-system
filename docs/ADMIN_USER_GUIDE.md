@@ -62,3 +62,4 @@ The **Campus Administration Portal** (`/admin`) provides full lifecycle manageme
 - Promote or change roles (`ADMIN`, `FACULTY`, `STAFF`, `STUDENT`, `VISITOR`).
 - Activate or deactivate accounts.
 - **Protection:** Prevents an administrator from accidentally demoting or locking their own administrative account.
+

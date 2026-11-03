@@ -74,3 +74,4 @@ export async function POST(req: NextRequest) {
     return errorResponse('Internal server error during registration', 500, err?.message);
   }
 }
+

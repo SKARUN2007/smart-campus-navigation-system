@@ -68,3 +68,4 @@ export async function POST(req: NextRequest) {
     return errorResponse('Failed to log navigation history', 500, err?.message);
   }
 }
+

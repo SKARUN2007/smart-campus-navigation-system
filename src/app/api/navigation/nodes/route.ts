@@ -66,3 +66,4 @@ export async function POST(req: NextRequest) {
     return errorResponse('Failed to create navigation node', 500, err?.message);
   }
 }
+

@@ -88,3 +88,4 @@ $$\theta = \text{atan2}(\vec{v}_{1x} \vec{v}_{2y} - \vec{v}_{1y} \vec{v}_{2x}, \
 - **Speed:** $v = 1.2\text{ m/s}$ (approx. $72\text{ m/min}$ or $4.32\text{ km/h}$).
 - **Walking Time:** $T = \lceil \text{distance} / 1.2 \rceil$ seconds.
 - **Calorie Estimation:** Approx. 0.055 kcal per horizontal meter walked.
+

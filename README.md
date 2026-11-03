@@ -4,21 +4,30 @@ A modern, full-stack, scalable web application for university wayfinding, intera
 
 ---
 
+## Live Demo & Repository
+
+- **Live Website:** [https://smart-campus-navigation-system.vercel.app](https://smart-campus-navigation-system.vercel.app) *(or your deployed Vercel URL)*
+- **Source Code Repository:** [https://github.com/skarunamuthan/smart-campus-navigation-system](https://github.com/skarunamuthan/smart-campus-navigation-system)
+- **Deployment Platform:** Vercel (Next.js 15)
+- **Production Database:** PostgreSQL 16 (Neon / Supabase)
+
+---
+
 ## 1. Project Overview
 
-Finding classrooms, academic departments, laboratories, administrative offices, and public amenities on a large university campus can be challenging for new students, faculty members, staff, and visitors. 
+Finding classrooms, academic departments, laboratories, administrative offices, and public amenities on a sprawling university campus can be challenging for new students, faculty members, staff, and visitors. 
 
 The **Smart Campus Navigation System** provides an interactive, vector-accurate, and algorithmic navigation experience:
-- Interactive full-screen SVG campus map with zooming, panning, building overlays, and pins.
-- Dijkstra & $A^*$ shortest-path calculation across 24 waypoints and 29 bidirectional paths.
-- Step-by-step landmark turn directions with vector cross/dot product angle calculations.
-- Wheelchair-accessible (step-free) route planning excluding staircases.
-- Real-time location search with autocomplete and filtering.
-- Facilities directory covering academics, dining, sports, medical, and administrative services.
-- Role-Based Access Control (Admin, Faculty, Staff, Student, Visitor).
-- Persistent PostgreSQL database via Prisma ORM with comprehensive REST APIs.
-- User Dashboard for bookmarks and route history.
-- Administrative Management Portal for full CRUD operations on buildings, locations, facilities, and walking paths.
+- **Interactive SVG Campus Map:** Full-screen vector map with smooth zoom (0.6x–3.0x), pan, architectural 3D building blocks, and pulsing location pins.
+- **Shortest-Path Navigation Engine:** Live Dijkstra & $A^*$ shortest-path calculations across 24 waypoints and 29 bidirectional paths.
+- **Turn-by-Turn Landmark Guidance:** Vector cross and dot product angle geometry ($\theta$) determining precise directional instructions (straight, turn left/right, slight left/right, ramp, stairs).
+- **Wheelchair-Friendly (Step-Free) Routing:** Filters out stairs and stone steps (such as the Central Garden Grand Stairway) and prefers ADA-compliant ramps.
+- **Advanced Location Search:** Real-time autocomplete, keyword searching across departments, codes, tags, and buildings.
+- **Campus Facilities Directory:** Filterable catalog across Academic, Dining, Administrative, Sports, Hostels, and Medical amenities.
+- **Role-Based Access Control (RBAC):** Dedicated permissions for `ADMIN`, `FACULTY`, `STAFF`, `STUDENT`, and `VISITOR`.
+- **Student Dashboard (`/dashboard`):** Personalized portal with saved favourite bookmarks, quick search, and recent walking history.
+- **Campus Administration Portal (`/admin`):** Complete management dashboard with real-time telemetry, building CRUD, location CRUD, facility CRUD, walking path graph controls, and user role management.
+- **Production-Ready Architecture:** PostgreSQL persistence via Prisma ORM, JWT authentication, automated CI/CD pipeline, and Docker container support.
 
 ---
 
@@ -39,117 +48,125 @@ The **Smart Campus Navigation System** provides an interactive, vector-accurate,
 - **Authentication:** JSON Web Tokens (JWT) & Bcrypt password hashing
 - **Session Management:** Secure HTTP-only cookies
 
-### Algorithms & Mathematics
+### Routing Algorithms & Mathematics
 - **Routing Engine:** Pure Dijkstra's Shortest Path & $A^*$ Search Algorithm
 - **Turn Angle Geometry:** 2D Vector Cross Product & Dot Product ($\theta$)
-- **Walking Metrics:** $v = 1.2\text{ m/s}$ walking velocity model
+- **Walking Velocity Model:** $v = 1.2\text{ m/s}$ (approx. $72\text{ m/min}$)
 
 ---
 
 ## 3. Project Architecture
 
 ```
-                                  [Next.js 15 Frontend]
-                                            │
-               ┌────────────────────────────┼────────────────────────────┐
-               ▼                            ▼                            ▼
-      [Landing Page (/)]          [Campus Map (/explore)]     [Route Finder (/directions)]
-               │                            │                            │
-               └────────────────────────────┼────────────────────────────┘
-                                            ▼
-                               [AuthContext / Client API]
-                                            │
-               ┌────────────────────────────┼────────────────────────────┐
-               ▼                            ▼                            ▼
-      [/api/locations]             [/api/navigation/route]       [/api/admin/stats]
-      [/api/buildings]                      │                    [/api/auth/login]
-      [/api/facilities]                     ▼                            │
-               │               [Graph Engine (Dijkstra/A*)]              │
-               │                            │                            │
-               └────────────────────────────┴────────────────────────────┘
-                                            │
-                                            ▼
-                                    [Prisma ORM Client]
-                                            │
-                                            ▼
-                                [PostgreSQL 16 Database]
+                                  [Client: Desktop / Tablet / Mobile]
+                                                  │
+                                                  ▼
+                                      [Next.js 15 App Router]
+                                                  │
+               ┌──────────────────────────────────┼──────────────────────────────────┐
+               ▼                                  ▼                                  ▼
+      [Landing Page (/)]               [Campus Map (/explore)]          [Route Finder (/directions)]
+      - Hero vector blueprint           - Interactive SVG Map            - Start & Dest Autocomplete
+      - Quick destinations              - Waypoint pins & filters        - Shortest path (Dijkstra)
+      - Dynamic search                  - Building details sheet         - Alternative & Step-Free (A*)
+               │                                  │                                  │
+               └──────────────────────────────────┼──────────────────────────────────┘
+                                                  ▼
+                                     [Global AuthProvider Context]
+                                     - JWT Session Management
+                                     - Role-Based Access Control
+                                                  │
+               ┌──────────────────────────────────┴──────────────────────────────────┐
+               ▼                                                                     ▼
+      [User Dashboard (/dashboard)]                                         [Admin Portal (/admin)]
+      - Personalized welcome                                                - System KPI telemetry
+      - Saved favourite bookmarks                                           - Building CRUD & boundaries
+      - Navigation trip history                                             - Location & room management
+      - Quick shortcuts                                                     - Walking path graph controls
+                                                  │                         - User role & status controls
+                                                  ▼
+                                      [Backend REST API Layer]
+                 ┌────────────────────────────────┼────────────────────────────────┐
+                 ▼                                ▼                                ▼
+         [/api/locations]                 [/api/navigation]                [/api/auth & /api/users]
+         - List, search, details          - Node & Edge management         - Login, logout, session
+         - Real-time search query         - Live Dijkstra route solver     - Register, profile, roles
+         - CRUD mutations                 - Navigation history log         - Password hashing (Bcrypt)
+                                                  │
+                                                  ▼
+                                     [Prisma ORM Database Client]
+                                                  │
+                                                  ▼
+                                      [PostgreSQL 16 Database]
 ```
 
 ---
 
-## 4. Folder Structure
+## 4. Key Application Pages
+
+| Page Route | Description |
+|---|---|
+| [`/`](file:///Users/skarunamuthan/DS-1/src/app/page.tsx) | Landing page with animated campus blueprint hero, quick destination cards, and search. |
+| [`/explore`](file:///Users/skarunamuthan/DS-1/src/app/explore/page.tsx) | Full-screen interactive SVG campus map with building overlays, zooming, panning, and pins. |
+| [`/directions`](file:///Users/skarunamuthan/DS-1/src/app/directions/page.tsx) | Shortest path route finder with Dijkstra/A* solver, alternative paths, and step-by-step guidance. |
+| [`/facilities`](file:///Users/skarunamuthan/DS-1/src/app/facilities/page.tsx) | Comprehensive campus facilities directory with modal details, hours, and contacts. |
+| [`/login`](file:///Users/skarunamuthan/DS-1/src/app/login/page.tsx) | Sign-in portal with validation, error handling, and one-click demo account autofill. |
+| [`/register`](file:///Users/skarunamuthan/DS-1/src/app/register/page.tsx) | Account creation with role selection (Student, Faculty, Visitor) and password strength meter. |
+| [`/dashboard`](file:///Users/skarunamuthan/DS-1/src/app/dashboard/page.tsx) | Student & faculty dashboard for managing saved favourites and recent trip history. |
+| [`/admin`](file:///Users/skarunamuthan/DS-1/src/app/admin/page.tsx) | Administration dashboard with telemetry counters, building/location/facility CRUD, and graph controls. |
+
+---
+
+## 5. Folder Structure
 
 ```
 .
+├── .github/
+│   └── workflows/
+│       └── ci.yml             # GitHub Actions CI pipeline
+├── docs/                      # Technical Documentation
+│   ├── API_DOCUMENTATION.md   # REST endpoint specifications
+│   ├── DATABASE_SCHEMA.md     # Models, relations, and data dictionary
+│   ├── ROUTING_ALGORITHM.md   # Dijkstra, A*, and turn angle math
+│   ├── ADMIN_USER_GUIDE.md    # Guide for campus administrators
+│   └── DEPLOYMENT_GUIDE.md    # Vercel, Docker, and Neon guides
 ├── prisma/
-│   ├── schema.prisma          # PostgreSQL models, enums, and relations
+│   ├── schema.prisma          # PostgreSQL models and relations
 │   └── seed.js                # Database seed script for campus data
 ├── public/                    # Static assets and icons
 ├── scripts/
-│   ├── run-all-tests.ts       # Master test runner executing all suites
-│   ├── test-routing.ts        # 15 Phase 5 Routing Algorithm unit tests
-│   ├── test-api.ts            # Phase 6 Backend REST API integration tests
-│   └── test-auth-security.ts  # Phase 7 & 8 Authentication & Security tests
+│   ├── run-all-tests.ts       # Master test runner (npm test)
+│   ├── test-routing.ts        # 15 Routing Algorithm unit tests
+│   ├── test-api.ts            # Backend REST API integration tests
+│   └── test-auth-security.ts  # Authentication & RBAC security tests
 ├── src/
-│   ├── app/
-│   │   ├── admin/             # Campus Administration Dashboard (/admin)
-│   │   ├── api/               # Backend REST API Route Handlers
-│   │   │   ├── admin/stats/   # System counters & telemetry
-│   │   │   ├── auth/          # Login, logout, session verification
-│   │   │   ├── buildings/     # Building CRUD endpoints
-│   │   │   ├── categories/    # Category CRUD endpoints
-│   │   │   ├── facilities/    # Facilities directory & search
-│   │   │   ├── favourites/    # User bookmark endpoints
-│   │   │   ├── locations/     # Location CRUD & search
-│   │   │   ├── navigation/    # Nodes, edges, routing & history
-│   │   │   └── users/         # User profile, registration, roles
-│   │   ├── dashboard/         # Student & Faculty User Dashboard (/dashboard)
-│   │   ├── directions/        # Route Finder & Shortest Path page (/directions)
-│   │   ├── explore/           # Interactive Campus Map (/explore)
-│   │   ├── facilities/        # Facilities Directory (/facilities)
-│   │   ├── login/             # Authentication Portal (/login)
-│   │   ├── register/          # Account Creation (/register)
-│   │   └── routes/            # Canonical forwarder to /directions
-│   ├── components/            # Reusable UI components
-│   │   ├── facilities/        # Facility cards and modal dialogues
-│   │   ├── home/              # Landing page sections & vector hero
-│   │   ├── layout/            # Responsive Navbar and Footer
-│   │   ├── map/               # SVG Map, Building, Marker, Controls
-│   │   ├── routing/           # RouteFinderForm, RouteCard, RouteMapViewer
-│   │   └── search/            # Advanced autocomplete search
+│   ├── app/                   # Next.js App Router pages and API routes
+│   ├── components/            # Modular React components
 │   ├── context/               # Global AuthContext & state providers
 │   ├── data/                  # Coordinate definitions & graph topology
 │   ├── lib/                   # Prisma singleton, auth utils, API client
 │   ├── services/routing/      # Dijkstra, A*, vector geometry, metrics
 │   └── types/                 # TypeScript interfaces
-├── docs/                      # Dedicated technical documentation
-│   ├── API_DOCUMENTATION.md   # Complete REST endpoint specifications
-│   ├── DATABASE_SCHEMA.md     # Models, relations, and data dictionary
-│   ├── ROUTING_ALGORITHM.md   # Mathematical graph & turn geometry logic
-│   ├── ADMIN_USER_GUIDE.md    # Guide for campus administrators
-│   └── DEPLOYMENT_GUIDE.md    # Cloud and container deployment
 ├── Dockerfile                 # Multi-stage production container
 ├── docker-compose.yml         # Containerized Next.js + PostgreSQL 16
 ├── package.json               # Scripts and dependencies
+├── vercel.json                # Vercel production deployment settings
 └── README.md                  # Main project documentation
 ```
 
 ---
 
-## 5. Prerequisites
+## 6. Installation & Local Development
 
+### Prerequisites
 - **Node.js:** v18.17.0 or higher (v20+ recommended)
-- **Package Manager:** npm v9+ or pnpm
-- **Database:** PostgreSQL 14+ (Local instance, Docker, or Neon/Supabase)
+- **PostgreSQL:** v14+ (Local instance, Docker, or Neon/Supabase)
 
----
-
-## 6. Installation Instructions
-
+### Setup Steps
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/your-username/smart-campus-nav.git
-   cd smart-campus-nav
+   git clone https://github.com/skarunamuthan/smart-campus-navigation-system.git
+   cd smart-campus-navigation-system
    ```
 
 2. **Install dependencies:**
@@ -176,25 +193,15 @@ The **Smart Campus Navigation System** provides an interactive, vector-accurate,
    npm run db:seed
    ```
 
----
-
-## 7. Running the Application
-
-### Development Mode:
-```bash
-npm run dev
-```
-Open [http://localhost:3000](http://localhost:3000) in your browser.
-
-### Production Build & Execution:
-```bash
-npm run build
-npm start
-```
+5. **Start Development Server:**
+   ```bash
+   npm run dev
+   ```
+   Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ---
 
-## 8. Automated Testing Suite
+## 7. Automated Testing Suite
 
 The application includes **91 automated test assertions** verifying routing algorithms, backend REST APIs, authentication security, and RBAC constraints.
 
@@ -210,9 +217,7 @@ Individual test suites:
 
 ---
 
-## 9. Pre-Configured Demo Accounts
-
-For evaluation, use the following seeded accounts:
+## 8. Pre-Configured Demo Accounts
 
 | Role | Email | Password | Permissions |
 |---|---|---|---|
@@ -222,17 +227,46 @@ For evaluation, use the following seeded accounts:
 
 ---
 
+## 9. Production Deployment Guide
+
+### Deploying to Vercel + Neon PostgreSQL
+
+1. **Database Setup (Neon / Supabase):**
+   - Create a free PostgreSQL database on [Neon.tech](https://neon.tech) or [Supabase.com](https://supabase.com).
+   - Copy the connection string.
+   - Run migrations and seed from your local machine:
+     ```bash
+     DATABASE_URL="<your_neon_url>" npx prisma db push
+     DATABASE_URL="<your_neon_url>" node prisma/seed.js
+     ```
+
+2. **Deploy to Vercel:**
+   - Push your code to GitHub.
+   - Import the repository on [Vercel](https://vercel.com).
+   - Add Environment Variables:
+     - `DATABASE_URL`: Your pooled PostgreSQL connection URL.
+     - `JWT_SECRET`: A secure 32+ character random secret.
+     - `NEXTAUTH_URL`: `https://your-app.vercel.app`.
+   - Click **Deploy**. Vercel will automatically build the Next.js application and publish the live site.
+
+### Deploying with Docker:
+```bash
+docker compose up -d --build
+```
+
+---
+
 ## 10. Dedicated Documentation
 
 For in-depth technical details, consult the dedicated guides in the `docs/` directory:
-- [API Documentation](file:///Users/skarunamuthan/DS-1/docs/API_DOCUMENTATION.md)
-- [Database Schema & Data Dictionary](file:///Users/skarunamuthan/DS-1/docs/DATABASE_SCHEMA.md)
-- [Routing Algorithm & Mathematical Geometry](file:///Users/skarunamuthan/DS-1/docs/ROUTING_ALGORITHM.md)
-- [Campus Administrator User Guide](file:///Users/skarunamuthan/DS-1/docs/ADMIN_USER_GUIDE.md)
-- [Production Deployment Guide](file:///Users/skarunamuthan/DS-1/docs/DEPLOYMENT_GUIDE.md)
+- [API Documentation](docs/API_DOCUMENTATION.md)
+- [Database Schema & Data Dictionary](docs/DATABASE_SCHEMA.md)
+- [Routing Algorithm & Mathematical Geometry](docs/ROUTING_ALGORITHM.md)
+- [Campus Administrator User Guide](docs/ADMIN_USER_GUIDE.md)
+- [Production Deployment Guide](docs/DEPLOYMENT_GUIDE.md)
 
 ---
 
 ## 11. License
 
-This project is licensed under the MIT License.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.

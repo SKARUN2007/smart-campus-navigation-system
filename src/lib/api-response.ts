@@ -29,3 +29,4 @@ export function errorResponse(error: string, status = 400, details?: any) {
     { status }
   );
 }
+

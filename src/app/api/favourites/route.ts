@@ -117,3 +117,4 @@ export async function DELETE(req: NextRequest) {
     return errorResponse('Failed to remove favourite', 500, err?.message);
   }
 }
+

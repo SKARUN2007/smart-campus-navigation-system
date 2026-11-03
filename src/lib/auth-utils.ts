@@ -71,3 +71,4 @@ export async function getAuthUser(req: NextRequest) {
     return null;
   }
 }
+

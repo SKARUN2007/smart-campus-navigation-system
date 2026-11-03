@@ -66,3 +66,4 @@ export async function DELETE(
     return errorResponse('Failed to delete navigation node', 500, err?.message);
   }
 }
+

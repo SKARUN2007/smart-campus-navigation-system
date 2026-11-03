@@ -109,3 +109,4 @@ export async function DELETE(
     return errorResponse('Failed to delete facility', 500, err?.message);
   }
 }
+

@@ -48,3 +48,4 @@ export async function POST(req: NextRequest) {
     return errorResponse('Failed to change password', 500, err?.message);
   }
 }
+

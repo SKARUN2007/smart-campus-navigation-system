@@ -132,3 +132,4 @@ export async function POST(req: NextRequest) {
     return errorResponse('Failed to create location', 500, err?.message);
   }
 }
+

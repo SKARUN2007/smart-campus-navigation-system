@@ -108,3 +108,4 @@ export async function DELETE(
     return errorResponse('Failed to delete user', 500, err?.message);
   }
 }
+

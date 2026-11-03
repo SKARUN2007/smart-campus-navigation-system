@@ -246,3 +246,4 @@ Removes a location from favourites.
 
 ### `GET /api/navigation/history`
 Returns recent user navigation trips.
+

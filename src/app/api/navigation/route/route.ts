@@ -86,3 +86,4 @@ export async function POST(req: NextRequest) {
     return errorResponse('Internal error during route calculation', 500, err?.message);
   }
 }
+

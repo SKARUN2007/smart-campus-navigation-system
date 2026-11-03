@@ -13,3 +13,4 @@ export async function GET(req: NextRequest) {
     return errorResponse('Failed to verify session', 500, err?.message);
   }
 }
+

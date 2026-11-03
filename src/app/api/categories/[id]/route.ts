@@ -105,3 +105,4 @@ export async function DELETE(
     return errorResponse('Failed to delete category', 500, err?.message);
   }
 }
+

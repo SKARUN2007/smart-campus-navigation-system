@@ -81,3 +81,4 @@ pg_dump -U campus_admin -d smart_campus -F c -b -v -f campus_backup_$(date +%Y%m
 ```bash
 pg_restore -U campus_admin -d smart_campus -v campus_backup_20261103.dump
 ```
+

@@ -133,3 +133,4 @@ Telemetry log of calculated routes and user journeys.
 | `durationSeconds` | Int | | Total route time |
 | `routeNodes` | String | | Node path sequence (e.g. `n1 -> n2 -> n3`) |
 | `createdAt` | DateTime | `@default(now())` | Query timestamp |
+

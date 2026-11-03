@@ -42,3 +42,4 @@ export async function GET(req: NextRequest) {
     return errorResponse('Facility search failed', 500, err?.message);
   }
 }
+

@@ -75,3 +75,4 @@ export async function DELETE(
     return errorResponse('Failed to delete navigation edge', 500, err?.message);
   }
 }
+
