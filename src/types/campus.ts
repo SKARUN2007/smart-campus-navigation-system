@@ -8,7 +8,16 @@ export type CampusCategoryType =
   | 'medical'
   | 'parking'
   | 'hostel'
-  | 'entrance';
+  | 'entrance'
+  | 'restrooms';
+
+export type FacilityGroupType =
+  | 'academic'
+  | 'administrative'
+  | 'learning'
+  | 'student'
+  | 'sports'
+  | 'essential';
 
 export interface CampusCategoryMeta {
   id: CampusCategoryType;
@@ -47,21 +56,30 @@ export interface CampusLocationItem {
   id: string;
   name: string;
   code: string;
+  buildingCode: string;
   category: CampusCategoryType;
   categoryLabel: string;
+  facilityGroup: FacilityGroupType;
   buildingId: string;
   buildingName: string;
   floor: string;
   roomNumber?: string;
   description: string;
   facilities: string[];
+  services?: string[];
   tags: string[];
   isPopular: boolean;
+  popularity: number; // 1-100 rating
   markerX: number;
   markerY: number;
+  x?: number; // alias for markerX
+  y?: number; // alias for markerY
   hours: string;
+  openingHours?: string; // alias for hours
   phone?: string;
+  contact?: string; // alias for phone
   accessible: boolean;
+  accessibility?: boolean; // alias for accessible
 }
 
 export interface CampusNode {

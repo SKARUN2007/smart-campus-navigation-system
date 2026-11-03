@@ -139,3 +139,4 @@ export const CampusBuilding: React.FC<CampusBuildingProps> = ({
     </g>
   );
 };
+

@@ -87,3 +87,4 @@ export const MapLegend: React.FC<MapLegendProps> = ({ isOpen: controlledIsOpen, 
     </div>
   );
 };
+

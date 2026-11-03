@@ -227,3 +227,4 @@ export const LocationPanel: React.FC<LocationPanelProps> = ({
     </div>
   );
 };
+

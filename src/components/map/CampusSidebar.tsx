@@ -349,3 +349,4 @@ export const CampusSidebar: React.FC<CampusSidebarProps> = ({
     </aside>
   );
 };
+

@@ -118,3 +118,4 @@ export const CampusMarker: React.FC<CampusMarkerProps> = ({
     </g>
   );
 };
+

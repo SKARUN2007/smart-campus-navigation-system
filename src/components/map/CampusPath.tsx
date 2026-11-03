@@ -91,3 +91,4 @@ export const CampusPath: React.FC<CampusPathProps> = ({
     </g>
   );
 };
+

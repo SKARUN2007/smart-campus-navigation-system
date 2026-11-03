@@ -72,3 +72,4 @@ export const CAMPUS_EDGES: CampusEdge[] = [
   { id: 'e26', from: 'node_hostel_quad', to: 'node_boys_hostel', distance: 110, accessible: true, available: true, pathwayType: 'WALKWAY', label: 'Boys Hostel Pathway' },
   { id: 'e27', from: 'node_hostel_quad', to: 'node_girls_hostel', distance: 110, accessible: true, available: true, pathwayType: 'WALKWAY', label: 'Girls Hostel Pathway' },
 ];
+
