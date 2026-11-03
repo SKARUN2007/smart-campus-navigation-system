@@ -69,3 +69,4 @@ export function toggleFavouriteId(id: string): { isFav: boolean; list: string[] 
     return { isFav: false, list: [] };
   }
 }
+

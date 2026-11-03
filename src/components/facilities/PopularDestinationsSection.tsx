@@ -126,3 +126,4 @@ export const PopularDestinationsSection: React.FC<PopularDestinationsSectionProp
     </section>
   );
 };
+

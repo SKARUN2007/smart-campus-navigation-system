@@ -167,3 +167,4 @@ export const FacilityCard: React.FC<FacilityCardProps> = ({
     </div>
   );
 };
+

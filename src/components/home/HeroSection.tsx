@@ -54,7 +54,7 @@ export const HeroSection: React.FC = () => {
               </Link>
 
               <Link
-                href="/routes"
+                href="/directions"
                 className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl bg-white hover:bg-slate-50 text-slate-800 font-semibold text-base border border-slate-200 shadow-sm hover:border-slate-300 hover:shadow transition-all active:scale-[0.98]"
               >
                 <Route className="w-5 h-5 text-blue-600" />

@@ -179,7 +179,7 @@ export const LocationPanel: React.FC<LocationPanelProps> = ({
       {/* Action Footer */}
       <div className="p-4 bg-slate-50 border-t border-slate-200/80 space-y-2">
         <Link
-          href={`/routes?destination=${encodeURIComponent(name)}&code=${code}`}
+          href={`/directions?destination=${encodeURIComponent(name)}&code=${code}`}
           onClick={() => {
             if (onGetDirections) {
               onGetDirections({ name, id: selectedLocation?.id || selectedBuilding?.id || '' });

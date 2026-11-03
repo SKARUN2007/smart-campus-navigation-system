@@ -101,7 +101,7 @@ export const Footer: React.FC = () => {
                 </Link>
               </li>
               <li>
-                <Link href="/routes" className="hover:text-cyan-400 transition-colors">
+                <Link href="/directions" className="hover:text-cyan-400 transition-colors">
                   Route Finder
                 </Link>
               </li>

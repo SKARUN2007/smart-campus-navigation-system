@@ -99,7 +99,7 @@ export interface CampusEdge {
   distance: number; // in meters
   accessible: boolean;
   available: boolean;
-  pathwayType: 'WALKWAY' | 'ROAD' | 'RAMP' | 'CORRIDOR';
+  pathwayType: 'WALKWAY' | 'ROAD' | 'RAMP' | 'CORRIDOR' | 'STAIRS';
   label?: string;
 }
 

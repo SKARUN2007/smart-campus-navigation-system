@@ -33,6 +33,7 @@ export const Navbar: React.FC = () => {
   const navLinks = [
     { name: 'Home', href: '/' },
     { name: 'Explore Campus', href: '/explore' },
+    { name: 'Directions', href: '/directions' },
     { name: 'Facilities', href: '/facilities' },
     { name: 'About', href: '/#about' },
   ];

@@ -241,7 +241,7 @@ export const FacilityDetailModal: React.FC<FacilityDetailModalProps> = ({
 
           <div className="flex items-center gap-2 w-full sm:w-auto">
             <Link
-              href={`/routes?destination=${encodeURIComponent(location.name)}`}
+              href={`/directions?destination=${encodeURIComponent(location.name)}`}
               className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 font-semibold text-xs transition-colors"
             >
               <Navigation className="w-4 h-4 text-blue-600" />
@@ -261,3 +261,4 @@ export const FacilityDetailModal: React.FC<FacilityDetailModalProps> = ({
     </div>
   );
 };
+
