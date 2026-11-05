@@ -7,7 +7,7 @@ A modern, full-stack, scalable web application for university wayfinding, intera
 ## Live Demo & Repository
 
 - **Live Website:** [https://smart-campus-navigation-system.vercel.app](https://smart-campus-navigation-system.vercel.app) *(or your deployed Vercel URL)*
-- **Source Code Repository:** [https://github.com/skarunamuthan/smart-campus-navigation-system](https://github.com/skarunamuthan/smart-campus-navigation-system)
+- **Source Code Repository:** [https://github.com/SKARUN2007/smart-campus-navigation-system](https://github.com/SKARUN2007/smart-campus-navigation-system)
 - **Deployment Platform:** Vercel (Next.js 15)
 - **Production Database:** PostgreSQL 16 (Neon / Supabase)
 
